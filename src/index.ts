@@ -12,7 +12,6 @@ const openai = new OpenAIApi(configuration);
 const app = express();
 const router = express.Router();
 
-app.use(bodyParser.json());
 // app.use(cors({ origin: '*', methods: ['POST'] }));
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -23,6 +22,8 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
+app.use(bodyParser.json());
 
 async function aiRes(promptText: string) {
   const response = await openai.createCompletion({
