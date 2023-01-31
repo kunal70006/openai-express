@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 import * as bodyParser from 'body-parser';
 import { Configuration, OpenAIApi } from 'openai';
-import cors from 'cors';
+// import cors from 'cors';
 
 dotenv.config();
 const configuration = new Configuration({
@@ -13,7 +13,16 @@ const app = express();
 const router = express.Router();
 
 app.use(bodyParser.json());
-app.use(cors({ origin: '*', methods: ['POST'] }));
+// app.use(cors({ origin: '*', methods: ['POST'] }));
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
+  );
+  next();
+});
 
 async function aiRes(promptText: string) {
   const response = await openai.createCompletion({
