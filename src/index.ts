@@ -13,7 +13,7 @@ const app = express();
 const router = express.Router();
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ origin: '*', methods: ['POST'] }));
 
 async function aiRes(promptText: string) {
   const response = await openai.createCompletion({
